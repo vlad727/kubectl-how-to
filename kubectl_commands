@@ -1,1 +1,1 @@
-kubectl config --kubeconfig=kubconfig view
+kubectl config --kubeconfig=kubconfig view # to get info about kubeconfig 
