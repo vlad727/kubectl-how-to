@@ -2,3 +2,4 @@ kubectl config --kubeconfig=kubconfig view # to get info about kubeconfig
 kubectl config current-context             # check which one conffig do you use 
 export KUBECONFIG=~/.kube/kubconfig'.      # add config by default  
 oc patch daemonset/dns-default -n openshift-dns --type='json' --patch "$(cat ose-dns-default-patch-changed.yaml)" # add static record to dns 
+kubectl config set-context --current --user=<service-account-name> # for example change context to admin
