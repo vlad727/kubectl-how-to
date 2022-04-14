@@ -5,3 +5,4 @@ oc patch daemonset/dns-default -n openshift-dns --type='json' --patch "$(cat ose
 kubectl config set-context --current --user=admin # for example change context to admin
 oc login --token uqiueriuqwfhqf                   # login by token 
 kubectl version --short # show version for kubernetes cluster and kubectl version in short output
+files ca.crt ca.key in dir /etc/kubernetes/pki used for sign certificate user 
