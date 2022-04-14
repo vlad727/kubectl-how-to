@@ -4,3 +4,4 @@ export KUBECONFIG=~/.kube/kubconfig'.      # add config by default
 oc patch daemonset/dns-default -n openshift-dns --type='json' --patch "$(cat ose-dns-default-patch-changed.yaml)" # add static record to dns 
 kubectl config set-context --current --user=admin # for example change context to admin
 oc login --token uqiueriuqwfhqf                   # login by token 
+kubectl version --short # show version for kubernetes cluster and kubectl version in short output
