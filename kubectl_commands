@@ -6,4 +6,4 @@ kubectl config set-context --current --user=admin # for example change context t
 oc login --token uqiueriuqwfhqf                   # login by token 
 kubectl version --short # show version for kubernetes cluster and kubectl version in short output
 files ca.crt ca.key in dir /etc/kubernetes/pki used for sign certificate user 
-kubectl config set-cluster k8s-solution_auto-dev-pub --server=https://xx.xx.xx.xx:6443
+kubectl config set-cluster k8s-solution_auto-dev-pub --server=https://xx.xx.xx.xx:6443 # add cluster 
