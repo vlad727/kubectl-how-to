@@ -8,3 +8,4 @@ kubectl version --short # show version for kubernetes cluster and kubectl versio
 files ca.crt ca.key in dir /etc/kubernetes/pki used for sign certificate user 
 kubectl config set-cluster k8s-solution_auto-dev-pub --server=https://xx.xx.xx.xx:6443 # add cluster 
 kubectl label nodes <your-node-name> disktype=ssd # set label for your nodes 
+kubectl label ns label-ns test-label=yes # set new label for ns 
