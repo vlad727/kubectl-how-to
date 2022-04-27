@@ -14,3 +14,4 @@ docker image ls --digests <your private registry url>/k8s/etcd
 oc create secret docker-registry <name registry> --docker-server=<your private registry>--docker-username=<login your registry> --docker-password=<password for registry>
 skopeo --override-os linux copy --preserve-digests docker://bitnami/etcd docker://<your private registry>k8s/etcd # copy image from docker hub to private 
 oc whoami --show-console # show console url
+oc edit console.config.openshift.io cluster 
