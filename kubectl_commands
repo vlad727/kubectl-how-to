@@ -12,4 +12,4 @@ kubectl label ns label-ns test-label=yes # set new label for ns
 kubectl api-resources --sort-by name -o wide | grep serviceaccount # get verbs and resources for kubernetes
 docker image ls --digests <your private registry url>/k8s/etcd
 oc create secret docker-registry <name registry> --docker-server=<your private registry>--docker-username=<login your registry> --docker-password=<password for registry>
-kopeo --override-os linux copy --preserve-digests docker://bitnami/etcd docker://<your private registry>k8s/etcd 
+skopeo --override-os linux copy --preserve-digests docker://bitnami/etcd docker://<your private registry>k8s/etcd # copy image from docker hub to private 
