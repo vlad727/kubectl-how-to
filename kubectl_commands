@@ -15,3 +15,4 @@ oc create secret docker-registry <name registry> --docker-server=<your private r
 skopeo --override-os linux copy --preserve-digests docker://bitnami/etcd docker://<your private registry>k8s/etcd # copy image from docker hub to private 
 oc whoami --show-console # show console url
 oc edit console.config.openshift.io cluster 
+kubectl apply -f -R . # apply all manifests in current dir 
