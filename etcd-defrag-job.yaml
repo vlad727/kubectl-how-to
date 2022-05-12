@@ -1,4 +1,3 @@
-apiVersion: batch/v1
 kind: Job
 metadata:
   name: etcd-defrag-job
@@ -7,24 +6,33 @@ spec:
     spec:
       containers:
       - name: etcdctl
-        image: <registry>/k8s/etcd:latest@sha256:a447e62a370e157ab5448d90352cdf8da21e280b4eca4ff0c0710cd774589aa8
+        image: <registry>/k8s/etcd:latest@sha256:a447e62a370e157ab5448d90352cdf8da21e280b4eca4ff0c0710cd774589aa8 
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
         env:
-        - name: GREETING
-          value: "Hello, that is defrag pod"
-        command:
+        - name: HELLO_MESSAGE
+          value: "Hello, I am  defrag pod"
+        - name: BYE_MESSAGE
+          value: "Jod is finished"
+        command: 
         - /bin/sh
-        - -c
-        args:
-        - echo $GREETING; etcd_host=`cat /home/hosts | awk '{print $1}' | tail -n 1`; etcdctl='etcdctl  --insecure-transport=false --insecure-skip-tls-verify --cacert=/home/kubernetes/static-pod-resources/configmaps/cloud-config/ca-bundle.pem --cert=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer/etcd-peer-master-01.crt --key=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer/etcd-peer-master-01.key';
+        - -c  
+        - |
+          #!/bin/sh
+          echo $HELLO_MESSAGE; 
+          # get ip master and set var 
+          etcd_host=`cat /home/hosts | awk '{print $1}' | tail -n 1`;
+          # set certs  for etcdctl  
+          etcdctl='etcdctl  --insecure-transport=false --insecure-skip-tls-verify --cacert=/home/kubernetes/static-pod-resources/configmaps/cloud-config/ca-bundle.pem --cert=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer/etcd-peer-master-01.crt --key=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer/etcd-peer-master-01.key'; 
+          # get all members 
           MEMBERS=`$etcdctl --endpoints="https://${etcd_host}:2379" member list |  awk 'BEGIN { ORS=" " }; { print $5 }' | sed -e 's/,//g')`;
-          for i in $MEMBERS;
+          # do defrag for all members 
+          for endpoint in $MEMBERS;
           do
-            $etcdctl --endpoints="${i}" defrag;
+            $etcdctl --endpoints="${endpoint}" defrag;
           done;
-          sleep 1000;
+          echo $BYE_MESSAGE
         volumeMounts:
         - mountPath: /home
           name: etcd-certs
@@ -35,3 +43,7 @@ spec:
       restartPolicy: OnFailure
       nodeSelector:
         etcd: "true"
+      tolerations:
+        - key: "dedicated"
+          operator: "Exists"
+          effect: "NoSchedule"
