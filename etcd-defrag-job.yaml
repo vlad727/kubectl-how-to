@@ -1,3 +1,4 @@
+apiVersion: batch/v1
 kind: Job
 metadata:
   name: etcd-defrag-job
@@ -6,7 +7,7 @@ spec:
     spec:
       containers:
       - name: etcdctl
-        image: <registry>/k8s/etcd:latest@sha256:a447e62a370e157ab5448d90352cdf8da21e280b4eca4ff0c0710cd774589aa8 
+        image: <your image registry>/sbt/ci90000011_osad/k8s/etcd:latest@sha256:a447e62a370e157ab5448d90352cdf8da21e280b4eca4ff0c0710cd774589aa8 
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
@@ -14,25 +15,43 @@ spec:
         - name: HELLO_MESSAGE
           value: "Hello, I am  defrag pod"
         - name: BYE_MESSAGE
-          value: "Jod is finished"
+          value: "Job is finished"
         command: 
         - /bin/sh
         - -c  
         - |
           #!/bin/sh
-          echo $HELLO_MESSAGE; 
-          # get ip master and set var 
-          etcd_host=`cat /home/hosts | awk '{print $1}' | tail -n 1`;
-          # set certs  for etcdctl  
-          etcdctl='etcdctl  --insecure-transport=false --insecure-skip-tls-verify --cacert=/home/kubernetes/static-pod-resources/configmaps/cloud-config/ca-bundle.pem --cert=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer/etcd-peer-master-01.crt --key=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer/etcd-peer-master-01.key'; 
+          echo $HELLO_MESSAGE;
+          echo  
+          # get hostname and use it for certs
+          ETCD_HOSTNAME=`cat /home/hosts | awk '{print $2}' | tail -n 1 | sed -e 's/\..*$//g'`;
+          echo "Defrag pod assigned on $ETCD_HOSTNAME";
+          echo 
+          # certs path 
+          CERT_PATH=/home/kubernetes/static-pod-resources/etcd-certs/secrets/etcd-all-peer;
+          # ca-bundle
+          CA=/home/kubernetes/static-pod-resources/configmaps/cloud-config/ca-bundle.pem;
+          # set cert 
+          ETCD_HOST_CERT=`ls $CERT_PATH | grep $ETCD_HOSTNAME | grep crt`;
+          # set key 
+          ETCD_HOST_KEY=`ls $CERT_PATH | grep $ETCD_HOSTNAME | grep key`;
+          # get ip master to use this for endpoints 
+          ETCD_HOST=`cat /home/hosts | awk '{print $1}' | tail -n 1`;  
+          echo "Host ip address is $ETCD_HOST";
+          echo
           # get all members 
-          MEMBERS=`$etcdctl --endpoints="https://${etcd_host}:2379" member list |  awk 'BEGIN { ORS=" " }; { print $5 }' | sed -e 's/,//g')`;
+          MEMBERS=`etcdctl --insecure-skip-tls-verify --cacert=$CA --cert=$CERT_PATH/$ETCD_HOST_CERT --key=$CERT_PATH/$ETCD_HOST_KEY --endpoints="https://${ETCD_HOST}:2379" member list |  awk 'BEGIN { ORS=" " }; { print $5 }' | sed -e 's/,//g')`;
+          echo "ETCD cluster consist of $MEMBERS";
+          echo 
+          echo "Defrag startring";
+          echo "------------------------------------------------------------";
           # do defrag for all members 
           for endpoint in $MEMBERS;
           do
-            $etcdctl --endpoints="${endpoint}" defrag;
+            etcdctl --insecure-skip-tls-verify --cacert=$CA --cert=$CERT_PATH/$ETCD_HOST_CERT --key=$CERT_PATH/$ETCD_HOST_KEY --endpoints="${endpoint}" defrag;
           done;
-          echo $BYE_MESSAGE
+          echo "------------------------------------------------------------";
+          echo $BYE_MESSAGE; 
         volumeMounts:
         - mountPath: /home
           name: etcd-certs
