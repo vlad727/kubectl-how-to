@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: etcdctl
-        image: <your image registry>/sbt/ci90000011_osad/k8s/etcd:latest@sha256:a447e62a370e157ab5448d90352cdf8da21e280b4eca4ff0c0710cd774589aa8 
+        image: <your image registry>/ci90000011_osad/k8s/etcd:latest@sha256:a447e62a370e157ab5448d90352cdf8da21e280b4eca4ff0c0710cd774589aa8 
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
