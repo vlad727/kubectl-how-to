@@ -17,3 +17,4 @@ oc whoami --show-console # show console url
 oc edit console.config.openshift.io cluster 
 kubectl apply -f -R . # apply all manifests in current dir 
 kubectl api-resources # to get all resources
+kubectl get events -n <namespace> --sort-by='.lastTimestamp' # get events by time 
