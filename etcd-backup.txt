@@ -1,3 +1,4 @@
 unset ETCDCTL_ENDPOINTS # unset var 
 etcdctl snapshot save /var/lib/etcd/backup.db # do backup 
 etcdctl snapshot status --write-out=table  /var/lib/etcd/backup # check file backup 
+ETCDCTL_API=3 etcdctl snapshot restore snapshot.db --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key --name=kubeadm-master --data-dir=/var/lib/etcd --initial-cluster=kubeadmmaster=https://10.0.0.4:2380 --initial-cluster-token=etcd-cluster-1 --initial-advertise-peerurls=https://10.0.0.4:2380 
