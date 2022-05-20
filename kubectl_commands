@@ -19,3 +19,5 @@ kubectl apply -f -R . # apply all manifests in current dir
 kubectl api-resources # to get all resources
 kubectl get events -n <namespace> --sort-by='.lastTimestamp' # get events by time 
 oc get project --selector <key>=<value>  # show namespaces with label 
+etcdctl get / --prefix --keys-only  # show all keys 
+etcdctl get /kubernetes.io/configmaps/openshift-etcd/configmap-etcd-defrag # get details about key 
