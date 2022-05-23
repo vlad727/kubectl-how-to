@@ -21,3 +21,4 @@ kubectl get events -n <namespace> --sort-by='.lastTimestamp' # get events by tim
 oc get project --selector <key>=<value>  # show namespaces with label 
 etcdctl get / --prefix --keys-only  # show all keys 
 etcdctl get /kubernetes.io/configmaps/openshift-etcd/configmap-etcd-defrag # get details about key 
+oc get node   --selector='apps.kubernetes.io/service=prometheus-istio' # to get nodes qwith selector
