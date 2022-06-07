@@ -23,3 +23,7 @@ etcdctl get / --prefix --keys-only  # show all keys
 etcdctl get /kubernetes.io/configmaps/openshift-etcd/configmap-etcd-defrag # get details about key 
 oc get node   --selector='apps.kubernetes.io/service=prometheus-istio' # to get nodes qwith selector
 kubectl auth can-i create clusterrole # check what can do user sa 
+### delete pods one by one ###
+PODS_COREDNS=$(kubectl get pods   --selector=k8s-app=kube-dns -n kube-system  | awk '{print $1}') # get pods with label 
+for i in $PODS_COREDNS; do kubectl delete pod $i -n kube-system; done
+### delete pods one by one ###
