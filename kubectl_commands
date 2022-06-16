@@ -31,3 +31,4 @@ for i in $PODS_COREDNS; do kubectl delete pod $i -n kube-system; done
 chroot /host # chroot to node from debug node  
 ### https://nigelpoulton.com/why-you-cant-ping-a-kubernetes-service/ ### why you can't ping service 
 ss -s && free -g  ### show established connection for node and free mem
+kubectl create rolebinding test-admin-rb --serviceaccount=test-namespace:test-admin --clusterrole=admin  -n test-namespace # add cluster role admin to ns with rolebinding
