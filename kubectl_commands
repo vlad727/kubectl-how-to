@@ -34,3 +34,4 @@ ss -s && free -g  ### show established connection for node and free mem
 kubectl create rolebinding test-admin-rb --serviceaccount=test-namespace:test-admin --clusterrole=admin  -n test-namespace # add cluster role admin to ns with rolebinding
 echo secret | base64 decode ### decode secret from secrets 
 openssl x509 -text -noout -in <file-with-certificate>
+kubectl label  namespace tribe-om-dev-alrt   istio/member-of- ### how to delete label from namespace (labes was stio/member-of=gt-sol-dev-controlplane-01) use for this  character - 
