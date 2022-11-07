@@ -1,3 +1,4 @@
+kubectl cluster-info # get info about your cluster
 kubectl config --kubeconfig=kubconfig view # to get info about kubeconfig 
 kubectl config current-context             # check which one conffig do you use 
 export KUBECONFIG=~/.kube/kubconfig'.      # add config by default  
