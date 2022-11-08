@@ -1,3 +1,4 @@
+kubectl patch istiooperator gt-sol-dev-controlplane-01    -p '{"metadata":{"finalizers":null}}' --type=merge -n gt-sol-dev-controlplane-01 ### delete io by remove finalizers 
 kubectl cluster-info # get info about your cluster
 kubectl config --kubeconfig=kubconfig view # to get info about kubeconfig 
 kubectl config current-context             # check which one conffig do you use 
