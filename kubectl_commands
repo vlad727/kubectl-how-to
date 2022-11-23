@@ -38,4 +38,5 @@ echo secret | base64 decode ### decode secret from secrets
 openssl x509 -text -noout -in <file-with-certificate>
 kubectl label  namespace tribe-om-dev-alrt   istio/member-of- ### how to delete label from namespace (labes was stio/member-of=gt-sol-dev-controlplane-01) use for this  character - 
 kubectl label nodes <your-node-name> disktype=ssd
-kubectl get secrets nexus-registry  -n istio-operator -o yaml | grep .dockerconfigjson: | sed -e 's/  .dockerconfigjson: //g' | base64 -d ### get only token and deencrypt it 
+kubectl get secrets nexus-registry  -n istio-operator -o yaml | grep .dockerconfigjson: | sed -e 's/  .dockerconfigjson: //g' | base64 -d ### get only token and deencrypt it
+kubectl apply -f ./ -n syn-data-plane-01 ### apply multiple yaml 
