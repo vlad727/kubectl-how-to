@@ -42,3 +42,4 @@ kubectl label nodes <your-node-name> disktype=ssd
 kubectl get secrets nexus-registry  -n istio-operator -o yaml | grep .dockerconfigjson: | sed -e 's/  .dockerconfigjson: //g' | base64 -d ### get only token and deencrypt it
 kubectl apply -f ./ -n syn-data-plane-01 ### apply multiple yaml 
 kubectl get pods -v=6 ### verbose mode for kubectl also it may be -v=7 or -v=8
+oc adm policy who-can use scc anyuid ### to check who can use scc 
