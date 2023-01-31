@@ -44,3 +44,4 @@ kubectl apply -f ./ -n syn-data-plane-01 ### apply multiple yaml
 kubectl get pods -v=6 ### verbose mode for kubectl also it may be -v=7 or -v=8
 oc adm policy who-can use scc anyuid ### to check who can use scc 
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "myregistrykey"}]}' ### add imagePullSecret to sa
+kubectl get pods -o=jsonpath='{.items..resources.requests}'-n <namespace> ### to get limits request for all pods in namespace
