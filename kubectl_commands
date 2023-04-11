@@ -45,3 +45,5 @@ kubectl get pods -v=6 ### verbose mode for kubectl also it may be -v=7 or -v=8
 oc adm policy who-can use scc anyuid ### to check who can use scc 
 kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "myregistrykey"}]}' ### add imagePullSecret to sa
 kubectl get pods -o=jsonpath='{.items..resources.requests}'-n <namespace> ### to get limits request for all pods in namespace
+kubectl annotate  ns ns-selector  scheduler.alpha.kubernetes.io/node-selector="type=worker" ### k8s for pod without nodeSelector
+kubectl annotate ns ns-selector openshift.io/node-selector="type=worker" ### openshift for pod without nodeSelector
