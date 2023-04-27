@@ -48,3 +48,4 @@ kubectl get pods -o=jsonpath='{.items..resources.requests}'-n <namespace> ### to
 kubectl annotate  ns ns-selector  scheduler.alpha.kubernetes.io/node-selector="type=worker" ### k8s for pod without nodeSelector
 kubectl annotate ns ns-selector openshift.io/node-selector="type=worker" ### openshift for pod without nodeSelector
 watch "kubectl get io -A && kubectl get pods -n istio-syn-01" ### to watch pods and io kind 
+kubectl delete io istio-default -n istio-syn-01 & kubectl get io istio-default  -n istio-syn-01  -o=json | jq '.metadata.finalizers = null' | kubectl apply -f -
