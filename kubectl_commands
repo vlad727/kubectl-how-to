@@ -50,3 +50,4 @@ kubectl annotate ns ns-selector openshift.io/node-selector="type=worker" ### ope
 watch "kubectl get io -A && kubectl get pods -n istio-syn-01" ### to watch pods and io kind 
 kubectl delete io istio-default -n istio-syn-01 & kubectl get io istio-default  -n istio-syn-01  -o=json | jq '.metadata.finalizers = null' | kubectl apply -f -
 kubectl get clusterversion ### get version for ocp and okd 
+kubectl delete rs -l app=istio-egressgateway -n istio-syn-01 ### delete rs only with label 
