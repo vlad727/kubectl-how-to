@@ -55,3 +55,4 @@ kubectl create deployment debug-test --image=registry.debug-nginx/debug-pod:1.3 
 kubectl expose deployment debug-test  --name=debug-test-svc --port=8080 --target-port=80 --type=ClusterIP    -n istio-syn-02 ### create svc by command
 kubectl create ns debug-ns --dry-run=client -o yaml > debug-pod/templates/namespace.yaml ### create template with kubectl 
 k get ns --no-headers | head -2 ### get ns without NAME STATUS AGE headers
+oc expose svc prometheus  --name route-prometheus --hostname <your-fqdn>
