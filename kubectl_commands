@@ -56,3 +56,4 @@ kubectl expose deployment debug-test  --name=debug-test-svc --port=8080 --target
 kubectl create ns debug-ns --dry-run=client -o yaml > debug-pod/templates/namespace.yaml ### create template with kubectl 
 k get ns --no-headers | head -2 ### get ns without NAME STATUS AGE headers
 oc expose svc prometheus  --name route-prometheus --hostname <your-fqdn>
+kubectl label node worker2 node-role.kubernetes.io/worker=worker ### set role worker for node worker
