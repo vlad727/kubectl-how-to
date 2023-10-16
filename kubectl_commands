@@ -59,3 +59,4 @@ oc expose svc prometheus  --name route-prometheus --hostname <your-fqdn>
 kubectl label node worker2 node-role.kubernetes.io/worker=worker ### set role worker for node worker
 kubectl get pods -n $i --ignore-not-found=true ###  ignore output  "No resources found"
 kubectl get io,pods -n test-cp ### get istio operator and pods in namespace test-cp
+kubectl get secrets -n namespace image-pull-secret-auto -o  json | jq '.data.".dockerconfigjson"' ### get secret only 
