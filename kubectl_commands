@@ -67,3 +67,4 @@ cat  ./kubeconfig |grep client-key-data | awk -F ' ' '{print $2}' |base64 -d > .
 APISERVER=`cat  ./kubeconfig |grep server | awk -F ' ' '{print $2}'`
 k rollout  history  deployment test-deploy  -n vlku2 ### show deploy revision 
 k rollout  undo   deployment test-deploy --to-revision=2  -n vlku2 ### rollout to revision 2
+kubectl create -f deployment.yaml --record ### add record to metadata
