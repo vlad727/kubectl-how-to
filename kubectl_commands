@@ -65,3 +65,5 @@ kubectl get secrets -n namespace image-pull-secret-auto -o  json | jq '.data.".d
 cat  ./kubeconfig |grep client-certificate-data | awk -F ' ' '{print $2}' |base64 -d > ./client-cert.pem
 cat  ./kubeconfig |grep client-key-data | awk -F ' ' '{print $2}' |base64 -d > ./client-key.pem
 APISERVER=`cat  ./kubeconfig |grep server | awk -F ' ' '{print $2}'`
+k rollout  history  deployment test-deploy  -n vlku2 ### show deploy revision 
+k rollout  undo   deployment test-deploy --to-revision=2  -n vlku2 ### rollout to revision 2
