@@ -1,0 +1,28 @@
+### rolebinding with service account need to provide namespace in subjects ###
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: "2024-05-07T14:13:19Z"
+  name: test
+  namespace: vlku6
+  resourceVersion: "1088442"
+  uid: 89bf6288-93e5-4120-95a1-7f6489222fd0
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: vlku4 <-- sa in namespace vlku4
+  namespace: vlku4 <-- namespace with sa vlku4
+### service account vlku4 from namespace vlku4 can do everything like admin in namespace vlku6 
+### need token from sa vlku4 and ns vlku + kubeconfig
+### example below ###
+kubectl get limits,quota     -n vlku6    --kubeconfig=_kubeconfig-test
+NAME                 CREATED AT
+limitrange/default   2024-05-07T14:12:40Z
+
+NAME                    AGE   REQUEST                                                                           LIMIT
+resourcequota/default   20m   requests.cpu: 0/10, requests.ephemeral-storage: 0/50Mi, requests.memory: 0/10Gi   limits.cpu: 0/20, limits.ephemeral-storage: 0/500Mi, limits.memory: 0/20Gi
+
+  
