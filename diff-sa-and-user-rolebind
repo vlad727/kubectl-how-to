@@ -25,4 +25,18 @@ limitrange/default   2024-05-07T14:12:40Z
 NAME                    AGE   REQUEST                                                                           LIMIT
 resourcequota/default   20m   requests.cpu: 0/10, requests.ephemeral-storage: 0/50Mi, requests.memory: 0/10Gi   limits.cpu: 0/20, limits.ephemeral-storage: 0/500Mi, limits.memory: 0/20Gi
 
-  
+### rolebinding with user do not need to provide namespace in subjects ###
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ose.test.user-admin
+  namespace: tribe-qwe-asd-p8
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: ose.test.user
+### rolebinding created via gui ldap 
