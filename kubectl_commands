@@ -70,3 +70,4 @@ k rollout  undo   deployment test-deploy --to-revision=2  -n vlku2 ### rollout t
 kubectl create -f deployment.yaml --record ### add record to metadata
 k   create configmap files  --from-file=nslist --from-file=quota.yaml --from-file=limitrange.yaml  -n vlku4 ### create cm with mltiple files
 k create configmap files  --from-file=_namespacelist --from-file=_resourcequota.yaml --from-file=_limitrange.yaml --from-file=_net-attach-def.yaml  -o yaml --dry-run=client > configmap-files.yaml 
+k create namespace my-awesome-project-6  --as=system:serviceaccount:service-account-admin:ns-admin ### create namespaces with service account (sa already has crb with cluster-admin)
